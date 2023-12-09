@@ -77,6 +77,10 @@ void	draw_map(t_data *game, int map_width, int map_height)
 			{
 				draw_tile(game->mlx, game->win, game->img_collectable, x, y);
 			}
+			else if (game->map[y][x] == 'E')
+			{
+				draw_tile(game->mlx, game->win, game->img_exit, x, y);
+			}
 			x++;
 		}
 		y++;
@@ -95,6 +99,8 @@ void	start_game(t_data *game, char *map_file, int map_width, int map_height)
 			"./sprites/witchKitty.xpm", &img_width, &img_height);
 	game->img_collectable = mlx_xpm_file_to_image(game->mlx,
 			"./sprites/pinkCrystal.xpm", &img_width, &img_height);
+		game->img_exit = mlx_xpm_file_to_image(game->mlx,
+			"./sprites/portal.xpm", &img_width, &img_height);
 	draw_map(game, map_width, map_height);
 	mlx_loop(game->mlx);
 }

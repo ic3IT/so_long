@@ -15,6 +15,7 @@ typedef struct s_data
 	void	*img_character;
 	void	*img_collectable;
 	void	*img_background;
+	void	*img_exit;
 	char	**map;
 }			t_data;
 
@@ -29,7 +30,8 @@ void		draw_tile(void *mlx, void *win, void *img, int x, int y);
 int			row_count(char *s);
 void		parse_map(t_data *game, char *map_file, int *map_width,
 				int *map_height);
-void start_game(t_data *game, char *map_file, int map_width, int map_height);
-void draw_map(t_data *game, int map_width, int map_height);
+void		start_game(t_data *game, char *map_file, int map_width,
+				int map_height);
+void		draw_map(t_data *game, int map_width, int map_height);
 
 #endif
