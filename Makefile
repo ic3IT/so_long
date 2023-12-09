@@ -11,7 +11,7 @@ LIBS    = -L$(LIBDIR) -lmlx -lXext -lX11 -lm
 INCLUDE = -I$(LIBDIR)
 
 # Source and object files
-SRC     = so_long.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c 
+SRC     = src/so_long.c src/initialize.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 OBJ     = $(SRC:.c=.o)
 
 all: $(NAME)
