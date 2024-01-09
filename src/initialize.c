@@ -65,7 +65,7 @@ void	draw_map(t_data *game, int map_width, int map_height)
 		x = 0;
 		while (x < map_width)
 		{
-			if (game->map[y][x] == '1')
+			 if(game->map[y][x] == '1')
 			{
 				draw_tile(game->mlx, game->win, game->img_tile, x, y);
 			}
@@ -75,6 +75,12 @@ void	draw_map(t_data *game, int map_width, int map_height)
 			}
 			else if (game->map[y][x] == 'C')
 			{
+				// game->height = y;
+				// game->width = x;
+				// printf("%d\n", x);
+				// printf("%d\n", y);
+				// printf("%d\n", game->width);
+				// printf("%d\n", game->height);
 				draw_tile(game->mlx, game->win, game->img_collectable, x, y);
 			}
 			else if (game->map[y][x] == 'E')
@@ -102,5 +108,4 @@ void	start_game(t_data *game, char *map_file, int map_width, int map_height)
 		game->img_exit = mlx_xpm_file_to_image(game->mlx,
 			"./sprites/portal.xpm", &img_width, &img_height);
 	draw_map(game, map_width, map_height);
-	mlx_loop(game->mlx);
 }

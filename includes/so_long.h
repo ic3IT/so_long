@@ -6,6 +6,8 @@
 # include "../minilibx-linux/mlx_int.h"
 # include <fcntl.h>
 # include <math.h>
+#include <X11/X.h>
+#include <X11/keysym.h>
 
 typedef struct s_data
 {
@@ -16,8 +18,12 @@ typedef struct s_data
 	void	*img_collectable;
 	void	*img_background;
 	void	*img_exit;
+	void	*movements;
 	char	**map;
+	int		width;
+	int		height;
 }			t_data;
+
 
 # define WINDOW_WIDTH 960
 # define WINDOW_HEIGHT 640
@@ -33,5 +39,7 @@ void		parse_map(t_data *game, char *map_file, int *map_width,
 void		start_game(t_data *game, char *map_file, int map_width,
 				int map_height);
 void		draw_map(t_data *game, int map_width, int map_height);
+void	run_game(t_data *game, char *map_file, int map_width, int map_height);
+
 
 #endif
