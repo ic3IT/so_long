@@ -25,6 +25,8 @@ typedef struct s_data
 	char	**map;
 	int		char_x;
 	int		char_y;
+	int		character_count;
+	int 	exit_count;
 }			t_data;
 
 // game.collectables = 0;
@@ -44,7 +46,7 @@ void		parse_map(t_data *game, char *map_file, int *map_width,
 void		start_game(t_data *game, int map_width,
 				int map_height);
 void		draw_map(t_data *game, int map_width, int map_height);
-void	run_game(t_data *game, char *map_file, int map_width, int map_height);
+void	run_game(t_data *game, char *map_file);
 void	update_graphics(int keysym, t_data *game, int x, int y);
 int valid_move(int keysym, t_data *game, int x, int y);
 int update_collectables(t_data *game);

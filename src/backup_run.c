@@ -16,7 +16,7 @@ int	on_keypress(int keysym, t_data *game)
 	return (0);
 }
 
-void	run_game(t_data *game, char *map_file, int map_width, int map_height)
+void	run_game(t_data *game, char *map_file)
 {
 	mlx_hook(game->win, KeyPress, KeyPressMask, &on_keypress, game);
 	mlx_loop(game->mlx);

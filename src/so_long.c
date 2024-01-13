@@ -2,19 +2,15 @@
 
 int	main(int argc, char *argv[])
 {
-	t_data	game;
-	// game.width = 0;
-	// game.height = 0;
+	t_data	game = {0}; // Initialize all fields of game to 0
 
-	int map_width, map_height;
+	int map_width = 0, map_height = 0; // Initialize map dimensions
+
 	if (argc == 2)
 	{
 		parse_map(&game, argv[1], &map_width, &map_height);
 		start_game(&game, map_width, map_height);
-		// printf("%d\n", game.char_x);
-		// 		printf("%d\n", game.char_y);
-		// printf("%d", game.all_collectables);
-		run_game(&game, argv[1], map_width, map_height);
+		run_game(&game, argv[1]);
 	}
 	else
 	{

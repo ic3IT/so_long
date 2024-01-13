@@ -35,9 +35,9 @@ void	parse_map(t_data *game, char *map_file, int *map_width, int *map_height)
 	*map_height = row_count(map_file);
 	*map_width = 0;
 	row = 0;
-	game->map = malloc(*map_height * sizeof(char *));
 	if (fd != -1)
 	{
+		game->map = malloc((*map_height + 1) * sizeof(char *));
 		while ((line = get_next_line(fd)))
 		{
 			line[strcspn(line, "\n")] = 0;
@@ -50,7 +50,8 @@ void	parse_map(t_data *game, char *map_file, int *map_width, int *map_height)
 	}
 	if (!valid_map(game, map_height)) {
 		fprintf(stderr, "Error: Invalid map format\n");
-		exit(EXIT_FAILURE);
+		on_destroy(game);
+		// return;
 	}
 }
 
@@ -60,6 +61,7 @@ void	draw_map(t_data *game, int map_width, int map_height)
 	int	x;
 
 	y = 0;
+	game->character_count = 0;
 	while (y < map_height)
 	{
 		x = 0;
@@ -73,6 +75,12 @@ void	draw_map(t_data *game, int map_width, int map_height)
 			{
 				game->char_x = x;
     			game->char_y = y;
+				game->character_count += 1;
+				if (game->character_count >= 2) {
+					printf("Invalid Characters or Exits in Map\n");
+					on_destroy(game);
+				}
+				// printf("%d", game->character_count);
 				draw_tile(game->mlx, game->win, game->img_character, x, y);
 			}
 			else if (game->map[y][x] == 'C')
@@ -82,6 +90,11 @@ void	draw_map(t_data *game, int map_width, int map_height)
 			}
 			else if (game->map[y][x] == 'E')
 			{
+				game->exit_count += 1;
+				if (game->exit_count >= 2) {
+					printf("Invalid Characters or Exits in Map\n");
+					on_destroy(game);
+				}
 				draw_tile(game->mlx, game->win, game->img_exit, x, y);
 			}
 			x++;
