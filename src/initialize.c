@@ -45,12 +45,12 @@ void	parse_map(t_data *game, char *map_file, int *map_width, int *map_height)
 			*map_width = fmax(strlen(line), *map_width);
 			row++;
 		}
+		game->map[row] = NULL;
 		close(fd);
 	}
-	else
-	{
-		fprintf(stderr, "Failed to open map file\n");
-		return ;
+	if (!valid_map(game, map_height)) {
+		fprintf(stderr, "Error: Invalid map format\n");
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -71,16 +71,13 @@ void	draw_map(t_data *game, int map_width, int map_height)
 			}
 			else if (game->map[y][x] == 'P')
 			{
+				game->char_x = x;
+    			game->char_y = y;
 				draw_tile(game->mlx, game->win, game->img_character, x, y);
 			}
 			else if (game->map[y][x] == 'C')
 			{
-				// game->height = y;
-				// game->width = x;
-				// printf("%d\n", x);
-				// printf("%d\n", y);
-				// printf("%d\n", game->width);
-				// printf("%d\n", game->height);
+				game->all_collectables += 1;
 				draw_tile(game->mlx, game->win, game->img_collectable, x, y);
 			}
 			else if (game->map[y][x] == 'E')
@@ -93,9 +90,10 @@ void	draw_map(t_data *game, int map_width, int map_height)
 	}
 }
 
-void	start_game(t_data *game, char *map_file, int map_width, int map_height)
+void	start_game(t_data *game, int map_width, int map_height)
 {
 	int img_height, img_width;
+
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, map_width * TILE_SIZE, map_height
 			* TILE_SIZE, "so_long");
@@ -103,9 +101,12 @@ void	start_game(t_data *game, char *map_file, int map_width, int map_height)
 			&img_width, &img_height);
 	game->img_character = mlx_xpm_file_to_image(game->mlx,
 			"./sprites/witchKitty.xpm", &img_width, &img_height);
+	game->img_blackTile = mlx_xpm_file_to_image(game->mlx,
+			"./sprites/blackSquare.xpm", &img_width, &img_height);
 	game->img_collectable = mlx_xpm_file_to_image(game->mlx,
 			"./sprites/pinkCrystal.xpm", &img_width, &img_height);
 		game->img_exit = mlx_xpm_file_to_image(game->mlx,
 			"./sprites/portal.xpm", &img_width, &img_height);
+	game->collectables = 0;
 	draw_map(game, map_width, map_height);
 }

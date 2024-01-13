@@ -18,11 +18,16 @@ typedef struct s_data
 	void	*img_collectable;
 	void	*img_background;
 	void	*img_exit;
+	void	*img_blackTile;
+	int		collectables;
+	int		all_collectables;
 	void	*movements;
 	char	**map;
-	int		width;
-	int		height;
+	int		char_x;
+	int		char_y;
 }			t_data;
+
+// game.collectables = 0;
 
 
 # define WINDOW_WIDTH 960
@@ -36,10 +41,15 @@ void		draw_tile(void *mlx, void *win, void *img, int x, int y);
 int			row_count(char *s);
 void		parse_map(t_data *game, char *map_file, int *map_width,
 				int *map_height);
-void		start_game(t_data *game, char *map_file, int map_width,
+void		start_game(t_data *game, int map_width,
 				int map_height);
 void		draw_map(t_data *game, int map_width, int map_height);
 void	run_game(t_data *game, char *map_file, int map_width, int map_height);
-
+void	update_graphics(int keysym, t_data *game, int x, int y);
+int valid_move(int keysym, t_data *game, int x, int y);
+int update_collectables(t_data *game);
+int on_destroy(t_data *game);
+int all_collectables_collected_exit(int keysym, t_data *game, int x, int y);
+int valid_map(t_data *game, int *map_height);
 
 #endif
